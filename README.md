@@ -167,6 +167,16 @@ The interpreter generates a graphical ASCII tree for debugging purposes. It uses
     |-- 3
     \-- 2
 ```
+## 📌 References
+
+- **GeeksforGeeks**, *Convert Infix to Prefix Notation*.  
+  https://www.geeksforgeeks.org/dsa/convert-infix-prefix-notation/
+
+- **GeeksforGeeks**, *Building Expression Tree from Prefix Expression*.  
+  https://www.geeksforgeeks.org/dsa/building-expression-tree-from-prefix-expression/
+
+- **GeeksforGeeks**, *Expression Tree (Introduction & Evaluation)*.  
+  https://www.geeksforgeeks.org/dsa/expression-tree/
 
 ---
 
