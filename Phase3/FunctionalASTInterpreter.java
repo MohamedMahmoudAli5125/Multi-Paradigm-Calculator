@@ -140,20 +140,29 @@ class ExpressionConverter {
 }
 
 class ASTParser {
+static record ParseResult(ASTNode node, int nextIdx) {}
+static ParseResult build(String[] tokens, int idx) {
+    String token = tokens[idx];
 
-    static ASTNode build(String[] tokens, int[] idx) {
-        String token = tokens[idx[0]++];
+    if (isOperator(token)) {
+        // Parse left subtree
+        ParseResult left = build(tokens, idx + 1);
 
-        if (isOperator(token)) {
-            OperatorNode node = new OperatorNode(token.charAt(0));
-            node.setLeft(build(tokens, idx));
-            node.setRight(build(tokens, idx));
-            return node;
-        } else {
-            return new NumberNode(Integer.parseInt(token));
-        }
+        // Parse right subtree using nextIdx from left
+        ParseResult right = build(tokens, left.nextIdx);
+
+        // Create operator node
+        OperatorNode opNode = new OperatorNode(token.charAt(0));
+        opNode.setLeft(left.node());
+        opNode.setRight(right.node());
+
+        // Return node + next index
+        return new ParseResult(opNode, right.nextIdx);
+    } else {
+        // Base case: number
+        return new ParseResult(new NumberNode(Integer.parseInt(token)), idx + 1);
     }
-
+}
     static boolean isOperator(String token) {
         return token.equals("+") || token.equals("-")
                 || token.equals("*") || token.equals("/");
@@ -210,21 +219,21 @@ class PrefixEvaluator {
         };
     }
 
-    static int evalPrefix(String[] tokens, int[] idx) {
-        String token = tokens[idx[0]++];
+    static record EvalResult(int value, int nextIdx) {}
 
-        if (token.equals("(")) {
-            String op = tokens[idx[0]++];
-            int left = evalPrefix(tokens, idx);
-            int right = evalPrefix(tokens, idx);
-            idx[0]++;
+static EvalResult evalPrefix(String[] tokens, int idx) {
+    String token = tokens[idx];
 
-            return applyOp(op.charAt(0), left, right);
-
-        } else {
-            return Integer.parseInt(token);
-        }
+    if (token.equals("(")) {
+        String op = tokens[idx + 1];
+        EvalResult left = evalPrefix(tokens, idx + 2);
+        EvalResult right = evalPrefix(tokens, left.nextIdx);
+        int val = applyOp(op.charAt(0), left.value, right.value);
+        return new EvalResult(val, right.nextIdx + 1); // skip closing ')'
+    } else {
+        return new EvalResult(Integer.parseInt(token), idx + 1);
     }
+}
 }
 
 public class FunctionalASTInterpreter {
@@ -243,12 +252,11 @@ public class FunctionalASTInterpreter {
 
             try {
                 String[] prefix = ExpressionConverter.infixToPrefix(line);
-                ASTNode root = ASTParser.build(prefix, new int[] { 0 });
+                ASTParser.ParseResult result = ASTParser.build(prefix, 0);
+ASTNode root = result.node();
                 System.out.println("\nPrefix expression: " + toPrefixConverter.toPrefix(root)); // for debugging
-                System.out.println("Result: " + PrefixEvaluator
-                        .evalPrefix(PrefixEvaluator.tokenize(toPrefixConverter.toPrefix(root)), new int[] { 0 })); // functional
-                                                                                                                   // programming
-                                                                                                                   // style
+                PrefixEvaluator.EvalResult resultval = PrefixEvaluator.evalPrefix(PrefixEvaluator.tokenize(toPrefixConverter.toPrefix(root)), 0);
+System.out.println("Result: " + resultval.value());                                                                                           // style
             } catch (NumberFormatException e) {
                 System.out.println("Error: invalid token in expression.");
             } catch (ArithmeticException e) {
