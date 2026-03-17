@@ -107,7 +107,18 @@ The calculator was intentionally limited to:
 This keeps the implementation simple while focusing on core parsing concepts.
 
 ---
+## 📌 References
 
+- **Flex (Fast Lexical Analyzer Generator)**, *Flex Manual*, Version 2.6.4.  
+  [https://westes.github.io/flex/manual/](https://westes.github.io/flex/manual/)
+
+- **GNU Bison**, *GNU Bison Manual*.  
+  [https://www.gnu.org/software/bison/manual/](https://www.gnu.org/software/bison/manual/)
+
+- **Harvard University**, *CS153: Compilers – Lecture 4: Recursive Parsing*.  
+  [https://groups.seas.harvard.edu/courses/cs153/2018fa/lectures/Lec04-Parsing.pdf](https://groups.seas.harvard.edu/courses/cs153/2018fa/lectures/Lec04-Parsing.pdf)
+  
+---
 # AST Interpreter - Phase 2 (Object-Oriented)
 
 This project implements a mathematical expression interpreter using an **Abstract Syntax Tree (AST)**. The primary goal is to shift from procedural calculation to an object-oriented model where expressions are treated as hierarchical data structures.
