@@ -8,7 +8,47 @@ The three phases are:
 3. **Phase 3 — Functional**: A prefix-notation evaluator applying functional programming constraints on top of the Phase 2 AST.
 
 ---
+## 🚀 How to Run
 
+### Phase 1: Flex & Bison (C)
+
+**Prerequisites:** `flex`, `bison`, and `gcc`.
+
+Generate the parser and lexer:
+```bash
+bison -d parser.y
+flex lexer.l
+```
+
+Compile the generated C files:
+```bash
+gcc parser.tab.c lex.yy.c -o calculator -lfl
+```
+
+Run the interpreter:
+```bash
+./calculator
+```
+
+### Phase 2 & 3: Java AST & Functional Interpreter
+
+**Prerequisites:** Java Development Kit (JDK).
+
+Compile all Java source files:
+```bash
+javac *.java
+```
+
+Run the OOP Visualizer (Phase 2):
+```bash
+java ASTVisualizer
+```
+
+Run the Functional Interpreter (Phase 3):
+```bash
+java FunctionalASTInterpreter
+```
+---
 ## 🔍 Key Considerations in Phase 1
 
 During Phase 1, the main goal was to design and implement a working lexical analyzer and parser for a simple integer calculator using Flex and Bison. The following key considerations were taken into account:
