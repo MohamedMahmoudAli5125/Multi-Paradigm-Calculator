@@ -1,4 +1,4 @@
-# Multi-Paradigm Calculator DSL — Lab 1 (CSE-225)
+# Multi-Paradigm Calculator — Lab 1 (CSE-225)
 
 This project implements a **Domain Specific Language (DSL)** for a mathematical calculator, built progressively across three distinct programming paradigms. Each phase introduces a new layer of abstraction and a different way of modeling computation — from low-level lexical analysis, to object-oriented tree structures, to pure functional evaluation.
 
